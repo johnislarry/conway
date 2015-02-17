@@ -1,2 +1,2 @@
 # conway
-simple game of life implementation 
+simple game of life implementation
