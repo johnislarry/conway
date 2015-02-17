@@ -42,6 +42,16 @@ function makeButton() {
   return button;
 }
 
+function checkSynch() {
+  for (var i = 0; i < HEIGHT; i++) {
+    for (var j = 0; j < WIDTH; j++) {
+      if (board[i][j] != nodeBoard[i][j].style.background) {
+        console.log("OUT OF SYNCH AT: " + i + " " + j);
+      }
+    }
+  }
+}
+
 function drawInitialBoard(table) {
   var board = [];
   var nodeBoard = [];
@@ -59,9 +69,20 @@ function drawInitialBoard(table) {
         state = ALIVE;
       }
       var td = document.createElement("td");
+      td.id = i + " " + j;
       td.style.width = SIZE + "px";
       td.style.height = SIZE + "px";
       td.style.background = state;
+      td.onclick = function() {
+        //console.log("click on " + this.id);
+        var coords = this.id.split(" ");
+        var i = coords[0];
+        var j = coords[1];
+        //console.log(this.id + ": board= " + board[i][j]);
+        //console.log(this.id + ": nodeboard= " + nodeBoard[i][j].style.background);
+        board[i][j] = (board[i][j] == ALIVE) ? DEAD : ALIVE;
+        nodeBoard[i][j].style.background = board[i][j];
+      };
       tr.appendChild(td);
 
       board[i][j] = state;
